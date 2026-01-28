@@ -1,3 +1,7 @@
+/** biome-ignore-all lint/style/useNamingConvention: REST handlers are UPPER case */
+
+// biome-ignore lint/correctness/noNodejsModules: this is server
+import process from 'node:process';
 import { serve } from 'bun';
 import index from './index.html';
 
@@ -7,13 +11,13 @@ const server = serve({
     '/*': index,
 
     '/api/hello': {
-      async GET(req) {
+      GET() {
         return Response.json({
           message: 'Hello, world!',
           method: 'GET',
         });
       },
-      async PUT(req) {
+      PUT() {
         return Response.json({
           message: 'Hello, world!',
           method: 'PUT',
@@ -21,8 +25,8 @@ const server = serve({
       },
     },
 
-    '/api/hello/:name': async (req) => {
-      const name = req.params.name;
+    '/api/hello/:name': (req) => {
+      const { name } = req.params;
       return Response.json({
         message: `Hello, ${name}!`,
       });
@@ -38,4 +42,5 @@ const server = serve({
   },
 });
 
+// biome-ignore lint/suspicious/noConsole: init
 console.log(`🚀 Server running at ${server.url}`);

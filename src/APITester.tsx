@@ -1,9 +1,9 @@
-import { useRef, type FormEvent } from 'react';
+import { type FormEvent, useCallback, useRef } from 'react';
 
 export function APITester() {
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
+  const testEndpoint = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -13,13 +13,15 @@ export function APITester() {
       const url = new URL(endpoint, location.href);
       const method = formData.get('method') as string;
       const res = await fetch(url, { method });
+      const data = res.json();
 
-      const data = await res.json();
+      // biome-ignore lint/style/noNonNullAssertion: init
       responseInputRef.current!.value = JSON.stringify(data, null, 2);
     } catch (error) {
+      // biome-ignore lint/style/noNonNullAssertion: init
       responseInputRef.current!.value = String(error);
     }
-  };
+  }, []);
 
   return (
     <div className="api-tester">

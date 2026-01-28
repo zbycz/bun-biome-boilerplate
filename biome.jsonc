@@ -2,6 +2,7 @@
 
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "extends": ["./config/biome-all-rules.json"],
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -19,5 +20,45 @@
     "formatter": {
       "quoteStyle": "single"
     }
-  }
+  },
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useExplicitType": "off",
+        "useQwikValidLexicalScope": "off",
+        "noUnresolvedImports": "off", // handled by TS
+        "noJsxLiterals": "off", // consider for i11n
+        "useAwaitThenable": "off" // looks broken, try again for biome > 2.3.13
+      },
+      "correctness": {
+        "useImageSize": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
+      },
+      "suspicious": {
+        "noReactSpecificProps": "off"
+      },
+      "style": {
+        "useNamingConvention": { "level": "on", "options": { "strictCase": false } },
+        "useConsistentTypeDefinitions": { "level": "on", "options": { "style": "type" } },
+        "noImplicitBoolean": "off",
+        "noMagicNumbers": "off"
+      }
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["*.json", "*.jsonc"],
+      "formatter": { "lineWidth": 120 }
+    }
+  ]
 }
