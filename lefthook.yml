@@ -1,0 +1,9 @@
+# $schema: https://json.schemastore.org/lefthook.json
+# Probably needs node to run the hook, related https://github.com/evilmartians/lefthook/issues/688
+
+pre-commit:
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
