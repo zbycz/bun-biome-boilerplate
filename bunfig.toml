@@ -1,2 +1,4 @@
+# https://bun.com/docs/runtime/bunfig
+
 [serve.static]
 env = "BUN_PUBLIC_*"
